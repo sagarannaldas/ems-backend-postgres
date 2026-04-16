@@ -1,5 +1,7 @@
 package com.sagarannaldas.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +38,14 @@ public class EmployeeController {
 	public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable("id") Long employeeId) {
 		EmployeeDto employeeDto = employeeService.findEmployeeById(employeeId);
 		return ResponseEntity.ok(employeeDto);
+	}
+	
+	// Build get all employees REST API
+	
+	@GetMapping
+	public ResponseEntity<List<EmployeeDto>> getAllEmployees(){
+		List<EmployeeDto> employeeLsit = employeeService.getAllEmployees();
+		return ResponseEntity.ok(employeeLsit);
 	}
 
 }

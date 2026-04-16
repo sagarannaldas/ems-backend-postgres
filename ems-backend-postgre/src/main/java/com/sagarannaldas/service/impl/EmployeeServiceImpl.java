@@ -1,5 +1,8 @@
 package com.sagarannaldas.service.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import com.sagarannaldas.dto.EmployeeDto;
@@ -26,10 +29,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public EmployeeDto findEmployeeById(Long employeeId) {
-		Employee employee = employeeRepository.findById(employeeId)
-				.orElseThrow(() -> new ResourceNotFoundException("Employee is not exists with given id: " + employeeId));
+		Employee employee = employeeRepository.findById(employeeId).orElseThrow(
+				() -> new ResourceNotFoundException("Employee is not exists with given id: " + employeeId));
 
 		return EmployeeMapper.mapToEmployeeDto(employee);
+	}
+
+	@Override
+	public List<EmployeeDto> getAllEmployees() {
+		List<Employee> employees = employeeRepository.findAll();
+
+		return employees.stream().map((employee) -> EmployeeMapper.mapToEmployeeDto(employee))
+				.collect(Collectors.toList());
 	}
 
 }
